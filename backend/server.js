@@ -10,6 +10,7 @@ app.use(express.json());
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/products", require("./routes/products"));
 app.use("/api/orders", require("./routes/orders"));
+app.use("/uploads", express.static("uploads"))
 
 app.get("/", (req, res) => {
   res.send("API Running...");
