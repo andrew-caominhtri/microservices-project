@@ -35,9 +35,14 @@ export default function AdminLogin(){
    alert(`Đăng nhập thất bại: ${msg}`)
   } catch (e) {
    console.error(e)
-   alert(
-    "Không kết nối được API. Kiểm tra NEXT_PUBLIC_API_URL trên Vercel và CORS_ORIGIN trên Render (phải có đúng domain Vercel, ví dụ https://cloud-project-henna.vercel.app)."
-   )
+   const onLocal =
+    typeof window !== "undefined" &&
+    (window.location.hostname === "localhost" ||
+     window.location.hostname === "127.0.0.1")
+   const hint = onLocal
+    ? `Bạn đang chạy trên localhost.\n\n• API đang dùng: ${apiUrl}\n• Mở URL Render trên trình duyệt 1 lần để service thức (cold start).\n• Deploy lại backend Render có CORS cho localhost + *.vercel.app.\n• Chạy lại npm run dev sau khi sửa .env.local.\n• Thử ẩn danh / tắt extension chặn request.`
+    : `Kiểm tra NEXT_PUBLIC_API_URL trên Vercel và deploy backend Render mới nhất (CORS *.vercel.app).\n\nAPI: ${apiUrl}`
+   alert(`Không kết nối được API.\n\n${hint}`)
   }
 
  }
